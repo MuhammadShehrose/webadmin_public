@@ -78,7 +78,7 @@ Visit: `http://localhost:8000`
 ## Default Credentials
 
 After seeding (if applicable):
-- **Email:** admin@example.com
+- **Email:** superadmin@example.com
 - **Password:** password
 
 ## Included Modules

@@ -17,14 +17,14 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Super Admin',
                 'type' => 'admin',
-                'email' => 'superadmin@gmail.com',
+                'email' => 'superadmin@example.com',
                 'email_verified_at' => now(),
                 'password' => 'password',
             ],
             [
                 'name' => 'User 1',
                 'type' => 'user',
-                'email' => 'user@gmail.com',
+                'email' => 'user@example.com',
                 'email_verified_at' => now(),
                 'password' => 'password',
             ]
