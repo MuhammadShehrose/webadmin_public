@@ -32,7 +32,6 @@ cd <project-folder>
 
 ```bash
 composer install
-npm install && npm run dev
 ```
 
 ### 3. Environment Setup
@@ -62,36 +61,13 @@ Create symbolic link for file uploads:
 php artisan storage:link
 ```
 
-### 6. Spatie Roles Migration Modification (Important)
-
-Before running migrations, add the `group` column to the roles table:
-
-**Location:** `vendor/spatie/laravel-permission/database/migrations/create_permission_tables.php`
-
-In the `roles` table schema, add:
-```php
-$table->string('group')->nullable()->after('guard_name');
-```
-
-The roles table should look like:
-```php
-Schema::create($tableNames['roles'], function (Blueprint $table) {
-    $table->bigIncrements('id');
-    $table->string('name');
-    $table->string('guard_name');
-    $table->string('group')->nullable(); // Add this line
-    $table->timestamps();
-    // ... rest of the table
-});
-```
-
-### 7. Seed Database (Optional)
+### 6. Seed Database (Optional)
 
 ```bash
 php artisan db:seed
 ```
 
-### 8. Start Development Server
+### 7. Start Development Server
 
 ```bash
 php artisan serve
@@ -130,7 +106,6 @@ This template is designed to be cloned for new projects. Simply:
 ## Important Notes
 
 - **Storage Link:** Always run `php artisan storage:link` after cloning
-- **Spatie Migration:** Don't forget to add the `group` column in the roles migration before running migrations
 - **File Uploads:** Ensure `storage/app/public` directory has proper write permissions
 
 ## License
