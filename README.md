@@ -1,63 +1,142 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel Blade Admin Panel - Starter Template
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A ready-to-use Laravel admin panel with pre-built CRUD operations. Clone and start building your next project in minutes!
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Dashboard** - Overview with statistics and quick access
+- **Location Management** - Countries, States, and Cities with relationships
+- **User Management** - Complete user CRUD with authentication
+- **Role Management** - Role-based access control using Spatie Permissions
+- **Media Library** - File and image upload management
+- **Settings** - Application configuration
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Tech Stack
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Laravel (PHP Framework)
+- Blade Templates
+- Bootstrap 5
+- MySQL Database
+- Spatie Laravel Permission
 
-## Learning Laravel
+## Installation
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 1. Clone the Repository
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+```bash
+git clone <your-repository-url>
+cd <project-folder>
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 2. Install Dependencies
 
-## Laravel Sponsors
+```bash
+composer install
+npm install && npm run dev
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 3. Environment Setup
 
-### Premium Partners
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+Update your `.env` file with database credentials:
+```
+DB_DATABASE=your_database_name
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+```
 
-## Contributing
+### 4. Database Migration
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+php artisan migrate
+```
 
-## Code of Conduct
+### 5. Storage Link (Important)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Create symbolic link for file uploads:
+```bash
+php artisan storage:link
+```
 
-## Security Vulnerabilities
+### 6. Spatie Roles Migration Modification (Important)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Before running migrations, add the `group` column to the roles table:
+
+**Location:** `vendor/spatie/laravel-permission/database/migrations/create_permission_tables.php`
+
+In the `roles` table schema, add:
+```php
+$table->string('group')->nullable()->after('guard_name');
+```
+
+The roles table should look like:
+```php
+Schema::create($tableNames['roles'], function (Blueprint $table) {
+    $table->bigIncrements('id');
+    $table->string('name');
+    $table->string('guard_name');
+    $table->string('group')->nullable(); // Add this line
+    $table->timestamps();
+    // ... rest of the table
+});
+```
+
+### 7. Seed Database (Optional)
+
+```bash
+php artisan db:seed
+```
+
+### 8. Start Development Server
+
+```bash
+php artisan serve
+```
+
+Visit: `http://localhost:8000`
+
+## Default Credentials
+
+After seeding (if applicable):
+- **Email:** admin@example.com
+- **Password:** password
+
+## Included Modules
+
+| Module | Description |
+|--------|-------------|
+| Dashboard | Main overview page |
+| Countries | Country management |
+| States | State management (linked to countries) |
+| Cities | City management (linked to states) |
+| Users | User CRUD with authentication |
+| Roles | Role-based permissions (Spatie) |
+| Media | File upload and management |
+| Settings | Application settings |
+
+## Usage
+
+This template is designed to be cloned for new projects. Simply:
+
+1. Clone the repository
+2. Follow installation steps
+3. Start building your custom features
+4. Modify or remove existing modules as needed
+
+## Important Notes
+
+- **Storage Link:** Always run `php artisan storage:link` after cloning
+- **Spatie Migration:** Don't forget to add the `group` column in the roles migration before running migrations
+- **File Uploads:** Ensure `storage/app/public` directory has proper write permissions
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
-<!-- adding new branch shah -->
+## Support
+
+For issues or questions, please open an issue in the repository.
