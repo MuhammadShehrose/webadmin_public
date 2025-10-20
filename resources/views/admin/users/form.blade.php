@@ -54,32 +54,24 @@
         </div>
 
         <div class="mb-4">
-            <label class="mb-2">Roles</label>
-            <div class="border rounded p-3">
-                <div class="row">
-                    @foreach ($roles as $role)
-                        <div class="col-md-6 col-lg-4 mb-2">
-                            <div class="form-check">
-                                <input
-                                    type="checkbox"
-                                    name="roles[]"
-                                    value="{{ $role->name }}"
-                                    class="form-check-input"
-                                    id="role-{{ $role->id }}"
-                                    {{ in_array($role->name, old('roles', isset($user) ? $user->roles->pluck('name')->toArray() : [])) ? 'checked' : '' }}
-                                >
-                                <label class="form-check-label" for="role-{{ $role->id }}">
-                                    {{ ucwords(str_replace('_', ' ', $role->name)) }}
-                                </label>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-            @error('roles')
-                <div class="invalid-feedback d-block mt-1">
-                    {{ $message }}
-                </div>
+            <label class="mb-2">Role</label>
+            <select name="role" class="form-select @error('role') is-invalid @enderror" required>
+                <option value="">-Select-</option>
+                @foreach ($roles as $role)
+                    @php
+                        $selectedRole = old('role', $user->roles->first()?->name ?? '');
+                    @endphp
+                    <option value="{{ $role->name }}"
+                        {{ $selectedRole === $role->name ? 'selected' : '' }}>
+                        {{ ucwords(str_replace('_', ' ', $role->name)) }}
+                    </option>
+                @endforeach
+            </select>
+
+            @error('role')
+                <span class="text-danger d-block mt-1">
+                    <strong>{{ $message }}</strong>
+                </span>
             @enderror
         </div>
 

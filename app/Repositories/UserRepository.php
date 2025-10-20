@@ -60,20 +60,23 @@ class UserRepository
         DB::beginTransaction();
 
         try {
+            if (isset($data['image'])) {
+                $data['image'] = file_upload($data['image'], 'users', 'public', 300, 300);
+            }
+
             // ✅ Hash password if present
             if (!empty($data['password'])) {
                 $data['password'] = Hash::make($data['password']);
             }
 
-            // ✅ Automatically verify email
-            $data['email_verified_at'] = now();
-
             // ✅ Create user
             $user = User::create($data);
 
+            $this->verify($user->id);
+
             // ✅ Sync roles if provided
-            if (!empty($data['roles'])) {
-                $user->syncRoles($data['roles']);
+            if (!empty($data['role'])) {
+                $user->syncRoles([$data['role']]);
             }
 
             DB::commit();
@@ -94,6 +97,15 @@ class UserRepository
         return DB::transaction(function () use ($id, $data) {
             $user = $this->find($id);
 
+            if (isset($data['image'])) {
+                // 1️⃣ Remove the old image first
+                if ($user->image) {
+                    file_remove($user->image, 'public');
+                }
+
+                $data['image'] = file_upload($data['image'], 'users', 'public', 300, 300);
+            }
+
             // If password field is empty (optional on update), remove it
             if (empty($data['password'])) {
                 unset($data['password']);
@@ -105,8 +117,8 @@ class UserRepository
             $user->update($data);
 
             // Sync roles if provided
-            if (isset($data['roles'])) {
-                $user->syncRoles($data['roles']);
+            if (isset($data['role'])) {
+                $user->syncRoles([$data['role']]);
             }
 
             return $user;

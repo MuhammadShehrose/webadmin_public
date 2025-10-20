@@ -38,9 +38,10 @@ class UserRequest extends FormRequest
                 'unique:users,email,' . $id,
                 'email'
             ],
-            'roles' => [
+            'role' => [
                 'required',
-                'array'
+                'string',
+                'exists:roles,name'
             ],
             'password' => [
                 $id ? 'nullable' : 'required', // only required on create
@@ -54,28 +55,6 @@ class UserRequest extends FormRequest
                 'mimes:jpg,jpeg,png,webp',
                 'max:2048',
             ],
-        ];
-    }
-
-    /**
-     * Custom messages (optional but recommended)
-     */
-    public function messages(): array
-    {
-        return [
-            'name.required' => 'The user name is required.',
-            'email.required' => 'The email address is required.',
-            'email.unique' => 'This email address is already registered.',
-            'email.email' => 'Please enter a valid email address.',
-            'type.required' => 'The user type is required.',
-            'type.in' => 'Invalid user type selected.',
-            'roles.required' => 'Please assign at least one role to the user.',
-            'password.required' => 'The password field is required.',
-            'password.min' => 'Password must be at least 8 characters.',
-            'password.confirmed' => 'Password confirmation does not match.',
-            'image.image' => 'Uploaded file must be an image.',
-            'image.mimes' => 'Image must be of type: jpg, jpeg, png, or webp.',
-            'image.max' => 'Image size must not exceed 2MB.',
         ];
     }
 }

@@ -56,9 +56,6 @@ class UserController extends Controller
     {
         $data = $request->validated();
         try {
-            if ($request->hasFile('image')) {
-                $data['image'] = file_upload($request->file('image'), 'users', 'public', 300, 300);
-            }
             $this->repo->create($data);
             return redirect()
                 ->route('admin.users.index')
@@ -98,16 +95,6 @@ class UserController extends Controller
     {
         $data = $request->validated();
         try {
-            $user = $this->repo->find($id);
-
-            if ($request->hasFile('image')) {
-                // 1️⃣ Remove the old image first
-                if ($user->image) {
-                    file_remove($user->image, 'public');
-                }
-
-                $data['image'] = file_upload($request->file('image'), 'users', 'public', 300, 300);
-            }
             $this->repo->update($id, $data);
 
             return redirect()
