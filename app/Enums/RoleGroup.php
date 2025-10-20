@@ -5,7 +5,6 @@ namespace App\Enums;
 enum RoleGroup: string
 {
     case ADMIN = 'admin';
-    case BRAND = 'brand';
     case USER  = 'user';
 
     /**

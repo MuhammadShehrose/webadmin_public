@@ -41,19 +41,18 @@ class PermissionSeeder extends Seeder
          * Create roles
          */
         $adminRole = Role::firstOrCreate(['name' => 'admin', 'group' => 'admin']);
-        $brandRole = Role::firstOrCreate(['name' => 'brand', 'group' => 'brand']);
         $userRole = Role::firstOrCreate(['name' => 'user', 'group' => 'user']);
 
         /**
          * Assign permissions
          * - admin: all permissions
-         * - brand: only country-related permissions
+         * - user: only country-related permissions
          */
         $adminPermissions = Permission::all();
-        // $brandPermissions = Permission::where('name', 'like', 'country.%')->get();
+        // $userPermissions = Permission::where('name', 'like', 'country.%')->get();
 
         $adminRole->syncPermissions($adminPermissions);
-        // $brandRole->syncPermissions($brandPermissions);
+        // $userRole->syncPermissions($userPermissions);
 
         // Refresh cache after seeding
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();

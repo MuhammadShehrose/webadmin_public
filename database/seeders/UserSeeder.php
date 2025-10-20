@@ -22,13 +22,6 @@ class UserSeeder extends Seeder
                 'password' => 'password',
             ],
             [
-                'name' => 'Brand',
-                'type' => 'brand',
-                'email' => 'brand@gmail.com',
-                'email_verified_at' => now(),
-                'password' => 'password',
-            ],
-            [
                 'name' => 'User 1',
                 'type' => 'user',
                 'email' => 'user@gmail.com',

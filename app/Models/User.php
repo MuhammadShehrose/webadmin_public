@@ -70,13 +70,6 @@ class User extends Authenticatable implements MustVerifyEmail
         });
     }
 
-    public function isBrand(): bool
-    {
-        return once(function () {
-            return $this->roles->contains('group', 'brand');
-        });
-    }
-
     public function isUser(): bool
     {
         return once(function () {
