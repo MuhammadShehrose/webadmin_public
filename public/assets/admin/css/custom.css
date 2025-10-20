@@ -1,0 +1,68 @@
+.side-menu__item.active i {
+    color: #664dc9 !important
+}
+
+.header .profile-dropdown {
+    border-right: none !important;
+}
+
+.select2-container .select2-selection--single {
+    height: 38px !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 35px !important;
+}
+
+.custom-switch-description {
+    margin-left: 0px !important;
+}
+
+.custom-switch-indicator {
+    cursor: pointer !important;
+}
+
+.folder-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* ✅ Moves button to right side */
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    background-color: #fff8e1;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid #ffe082;
+}
+
+.folder-header i {
+    color: #ffb300; /* yellow folder icon */
+    font-size: 1.6rem;
+}
+
+.folder-section {
+    border: 1px solid #e9ecef;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    background-color: #fdfdfd;
+}
+
+.media-card {
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.media-card:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.media-card img {
+    object-fit: cover;
+    width: 100%;
+    height: 140px;
+    border-radius: 0.5rem;
+}
+
+.file-info {
+    font-size: 0.85rem;
+}
